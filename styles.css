@@ -1,0 +1,101 @@
+:root {
+  color-scheme: dark;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #000;
+  color: #fff;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  background: #000;
+}
+
+body {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow-x: hidden;
+}
+
+.holding-page {
+  width: min(84vw, 44rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(3rem, 8vh, 7rem) 0;
+  text-align: center;
+}
+
+.logo {
+  width: clamp(9rem, 24vw, 13rem);
+  height: auto;
+  display: block;
+  border-radius: 50%;
+}
+
+h1 {
+  margin: clamp(2rem, 5vh, 3.5rem) 0 0;
+  font-size: clamp(2.4rem, 8.2vw, 5.6rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-indent: 0.12em;
+}
+
+.rainbow-ribbon {
+  width: 100%;
+  height: 2px;
+  margin-top: clamp(1.5rem, 3.5vh, 2.4rem);
+  background: linear-gradient(
+    90deg,
+    #ff2b1c 0%,
+    #ff8a00 18%,
+    #ffe600 34%,
+    #37db45 50%,
+    #19cfe2 66%,
+    #4777ff 82%,
+    #d72cff 100%
+  );
+}
+
+p {
+  margin: clamp(1.6rem, 4vh, 2.5rem) 0 0;
+  font-size: clamp(1rem, 2.8vw, 1.45rem);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: 0.48em;
+  text-indent: 0.48em;
+  text-transform: lowercase;
+}
+
+@media (max-width: 36rem) {
+  .holding-page {
+    width: min(82vw, 28rem);
+  }
+
+  h1 {
+    font-size: clamp(2rem, 10.8vw, 3.4rem);
+    letter-spacing: 0.08em;
+    text-indent: 0.08em;
+  }
+
+  p {
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
