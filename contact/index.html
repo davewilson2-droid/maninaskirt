@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Contact Man in a Skirt.">
+    <title>Contact — maninaskirt</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body class="site-body">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Man in a Skirt home">
+        <img src="/assets/logo.png" width="52" height="52" alt="">
+        <span>maninaskirt</span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="/about/">about</a>
+        <a href="/apps/">apps</a>
+        <a href="/contact/" aria-current="page">contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="contact-layout page-shell">
+        <div class="contact-intro">
+          <p class="eyebrow">contact</p>
+          <h1>Start a<br><span>conversation.</span></h1>
+          <p>Product ideas, digital health, clinical insight—or simply something interesting. Send a message and I’ll get back to you.</p>
+        </div>
+
+        <form class="contact-form" id="contact-form">
+          <div class="field-pair">
+            <label>
+              <span>name</span>
+              <input type="text" name="name" autocomplete="name" required>
+            </label>
+            <label>
+              <span>email</span>
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+          </div>
+          <label>
+            <span>subject</span>
+            <input type="text" name="subject" required>
+          </label>
+          <label>
+            <span>message</span>
+            <textarea name="message" rows="7" required></textarea>
+          </label>
+          <button class="primary-button form-button" type="submit">open in my email app</button>
+          <p class="form-note">This opens a pre-addressed message in your email app. Nothing is stored by this website.</p>
+        </form>
+      </section>
+
+      <section class="direct-email">
+        <div class="page-shell">
+          <p>or email directly</p>
+          <a href="mailto:hello@maninaskirt.com">hello@maninaskirt.com</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer page-shell">
+      <span>© maninaskirt</span>
+      <a href="/">back to the beginning</a>
+    </footer>
+    <script src="/script.js"></script>
+  </body>
+</html>
