@@ -33,6 +33,7 @@ body {
 
 img {
   max-width: 100%;
+  height: auto;
 }
 
 a {
@@ -421,6 +422,21 @@ textarea:focus-visible {
   content: "";
 }
 
+.status-going-live {
+  border-color: #28767a;
+  color: #63e5e8;
+}
+
+.status-going-live::before {
+  width: 0.42rem;
+  height: 0.42rem;
+  margin-right: 0.45rem;
+  border-radius: 50%;
+  background: #63e5e8;
+  box-shadow: 0 0 12px rgba(99, 229, 232, 0.72);
+  content: "";
+}
+
 .featured-app {
   display: grid;
   grid-template-columns: minmax(300px, 0.8fr) minmax(420px, 1.4fr);
@@ -559,6 +575,18 @@ figure {
 .development-card > p {
   min-height: 8rem;
   margin: 2rem 0;
+}
+
+.development-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: center;
+  margin: -0.5rem 0 1.5rem;
+}
+
+.development-card-actions .text-link {
+  margin-top: 0;
 }
 
 .mini-shot,
