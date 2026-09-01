@@ -261,6 +261,19 @@ textarea:focus-visible {
   font-size: clamp(1.05rem, 1.8vw, 1.35rem);
 }
 
+.about-story-page {
+  min-height: calc(100svh - 14rem);
+}
+
+.about-story-copy {
+  max-width: 760px;
+  margin: clamp(3rem, 7vw, 6rem) 0 0 auto;
+}
+
+.about-story-copy a {
+  text-underline-offset: 0.2em;
+}
+
 .section-heading {
   display: flex;
   align-items: flex-end;
