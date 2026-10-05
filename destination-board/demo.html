@@ -1,0 +1,2014 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Destination Board">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="apple-touch-icon" href="/assets/apps/destination-board.png">
+<title>Try Destination Board — interactive demo</title><meta name="robots" content="noindex">
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #050505;
+  --panel: #111111;
+  --line: #3b4655;
+  --line-strong: #596579;
+  --row-alt: rgba(255, 255, 255, 0.026);
+  --surface: #090909;
+  --text: #ffffff;
+  --muted: #a8b0c2;
+  --calling: #d2b48c;
+  --good: #31c48d;
+  --warn: #ff9f1c;
+  --bad: #ff4d4f;
+  --clock: #39c6f0;
+  --flight-bg: #030303;
+  --flight-panel: #0f0f0a;
+  --flight-line: #4f470f;
+  --flight-line-strong: #ffd21f;
+  --flight-row-alt: rgba(255, 210, 31, 0.055);
+  --flight-surface: #080805;
+  --flight-text: #f8fafc;
+  --flight-muted: #ffe36d;
+  --flight-clock: #ffd21f;
+  --flight-head-bg: #ffd21f;
+  --flight-head-text: #050505;
+  --flight-accent: #ffd21f;
+  --flight-departure-accent: #e6d36a;
+  --flight-dest: #ffffff;
+}
+body[data-theme="amber"] {
+  --bg: #050200;
+  --panel: #120800;
+  --line: #6d4a18;
+  --line-strong: #a87522;
+  --row-alt: rgba(255, 191, 63, 0.045);
+  --surface: #090400;
+  --text: #ffbf3f;
+  --muted: #d4a547;
+  --calling: #f6d28b;
+  --good: #f4b942;
+  --warn: #ff8c00;
+  --bad: #ff4d2d;
+  --clock: #ffd166;
+  --flight-bg: #050200;
+  --flight-panel: #120800;
+  --flight-line: #6d4a18;
+  --flight-line-strong: #ffbf3f;
+  --flight-row-alt: rgba(255, 191, 63, 0.045);
+  --flight-surface: #090400;
+  --flight-text: #ffbf3f;
+  --flight-muted: #d4a547;
+  --flight-clock: #ffd166;
+  --flight-head-bg: #ffbf3f;
+  --flight-head-text: #050200;
+  --flight-accent: #ffbf3f;
+  --flight-departure-accent: #d4a547;
+  --flight-dest: #ffbf3f;
+}
+body[data-theme="light"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --panel: #eeeeee;
+  --line: #9aa3ad;
+  --line-strong: #5d6673;
+  --row-alt: rgba(0, 0, 0, 0.045);
+  --surface: #f8fafc;
+  --text: #000000;
+  --muted: #4b5563;
+  --calling: #6b4e16;
+  --good: #0f7a4f;
+  --warn: #9a5a00;
+  --bad: #b00020;
+  --clock: #005f73;
+  --flight-bg: #ffffff;
+  --flight-panel: #eeeeee;
+  --flight-line: #9aa3ad;
+  --flight-line-strong: #5d6673;
+  --flight-row-alt: rgba(0, 0, 0, 0.045);
+  --flight-surface: #f8fafc;
+  --flight-text: #000000;
+  --flight-muted: #4b5563;
+  --flight-clock: #005f73;
+  --flight-head-bg: #111827;
+  --flight-head-text: #ffffff;
+  --flight-accent: #111827;
+  --flight-departure-accent: #374151;
+  --flight-dest: #000000;
+}
+body[data-theme="quiet"] {
+  --bg: #000000;
+  --panel: #050505;
+  --line: #1f2933;
+  --line-strong: #344054;
+  --row-alt: rgba(184, 192, 204, 0.02);
+  --surface: #020202;
+  --text: #b8c0cc;
+  --muted: #6b7280;
+  --calling: #8c7a5b;
+  --good: #2f8f68;
+  --warn: #a66a1f;
+  --bad: #9f2f2f;
+  --clock: #4d9fb3;
+  --flight-bg: #000000;
+  --flight-panel: #050505;
+  --flight-line: #1f2933;
+  --flight-line-strong: #344054;
+  --flight-row-alt: rgba(184, 192, 204, 0.02);
+  --flight-surface: #020202;
+  --flight-text: #b8c0cc;
+  --flight-muted: #6b7280;
+  --flight-clock: #4d9fb3;
+  --flight-head-bg: #101828;
+  --flight-head-text: #b8c0cc;
+  --flight-accent: #8a95a6;
+  --flight-departure-accent: #6b7280;
+  --flight-dest: #b8c0cc;
+}
+body.flightBoard {
+  --bg: var(--flight-bg);
+  --panel: var(--flight-panel);
+  --line: var(--flight-line);
+  --line-strong: var(--flight-line-strong);
+  --row-alt: var(--flight-row-alt);
+  --surface: var(--flight-surface);
+  --text: var(--flight-text);
+  --muted: var(--flight-muted);
+  --calling: var(--flight-muted);
+  --good: #65d68b;
+  --warn: #ff9f1c;
+  --bad: #ff4d4f;
+  --clock: var(--flight-clock);
+}
+body.flightBoard.flightDepartures {
+  --line: var(--flight-line);
+  --row-alt: var(--flight-row-alt);
+  --muted: var(--flight-departure-accent);
+  --clock: var(--flight-clock);
+}
+body.tubeBoard,
+body.busBoard {
+  --tube-amber: #ffc02e;
+  --tube-amber-bright: #ffd66b;
+  --tube-shell: #151515;
+  background: #020202;
+}
+body.tubeBoard main,
+body.busBoard main {
+  display: block;
+  height: 100dvh;
+  min-height: 100dvh;
+  padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+}
+body.tubeBoard main > header,
+body.tubeBoard main > .head,
+body.tubeBoard main > #services,
+body.tubeBoard main > .rotator,
+body.tubeBoard main > footer {
+  display: none;
+}
+body.busBoard main > header,
+body.busBoard main > .head,
+body.busBoard main > #services,
+body.busBoard main > .rotator,
+body.busBoard main > footer {
+  display: none;
+}
+.tubeDisplay {
+  position: relative;
+  isolation: isolate;
+  height: 100%;
+  overflow: hidden;
+  border: clamp(7px, 1.4vw, 14px) solid var(--tube-shell);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 1.5px 1.5px, rgba(255, 176, 0, .055) 1.05px, transparent 1.4px) 0 0 / 4px 4px,
+    linear-gradient(#080806, #030302);
+  color: var(--tube-amber);
+  box-shadow: inset 0 0 0 2px #000, inset 0 0 60px rgba(0, 0, 0, .9);
+  font-family: Consolas, "SFMono-Regular", "Roboto Mono", monospace;
+}
+.tubeDisplay::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(0, 0, 0, .13) 4px);
+  mix-blend-mode: multiply;
+}
+.tubeDotText {
+  color: var(--tube-amber);
+  text-shadow: 0 0 2px rgba(255, 192, 46, .95), 0 0 7px rgba(255, 176, 0, .5);
+  -webkit-text-stroke: .25px currentColor;
+  -webkit-mask-image: radial-gradient(circle, #000 1.55px, transparent 1.82px);
+  -webkit-mask-position: 0 0;
+  -webkit-mask-size: 4px 4px;
+  mask-image: radial-gradient(circle, #000 1.55px, transparent 1.82px);
+  mask-position: 0 0;
+  mask-size: 4px 4px;
+}
+.tubeDisplayHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  height: 21%;
+  padding: clamp(14px, 3vw, 28px) clamp(16px, 3.5vw, 34px) clamp(7px, 1.3vw, 13px);
+  border-bottom: 1px solid rgba(255, 176, 0, .32);
+  text-transform: uppercase;
+}
+.tubeDisplayStation {
+  overflow: hidden;
+  font-size: clamp(20px, 4.3vw, 53px);
+  font-weight: 800;
+  letter-spacing: .025em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tubeDisplayPlatform {
+  flex: 0 0 auto;
+  max-width: 42%;
+  overflow: hidden;
+  font-size: clamp(10px, 1.7vw, 20px);
+  letter-spacing: .08em;
+  opacity: .84;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tubePageLabel {
+  position: absolute;
+  top: 23.5%;
+  right: clamp(16px, 3.5vw, 34px);
+  z-index: 1;
+  font-size: clamp(9px, 1.4vw, 14px);
+  letter-spacing: .16em;
+  opacity: .72;
+}
+.tubeRows {
+  display: grid;
+  grid-template-rows: repeat(var(--tube-line-count, 4), minmax(0, 1fr));
+  height: 65%;
+  padding: 8% clamp(16px, 3.5vw, 34px) 1%;
+}
+.tubeRow {
+  display: grid;
+  grid-template-columns: clamp(22px, 4vw, 44px) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(7px, 1.5vw, 16px);
+  min-height: 0;
+  border-bottom: 1px dotted rgba(255, 176, 0, .18);
+  font-size: clamp(17px, 4vw, 47px);
+  font-weight: 800;
+  letter-spacing: .035em;
+  line-height: 1;
+}
+.tubeRow:last-child { border-bottom: 0; }
+.tubeRow.tubeMessageCovered { visibility: hidden; }
+.tubeRowOrder { opacity: .66; }
+.tubeRowDestination {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tubeRowDue {
+  color: var(--tube-amber-bright);
+  text-align: right;
+  white-space: nowrap;
+}
+.tubeSystemMessage {
+  position: absolute;
+  z-index: 3;
+  right: clamp(16px, 3.5vw, 34px);
+  bottom: 14%;
+  left: clamp(16px, 3.5vw, 34px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(65% / var(--tube-line-count, 4));
+  overflow: hidden;
+  background: transparent;
+  color: var(--tube-amber-bright);
+  font-size: clamp(14px, 3vw, 36px);
+  font-weight: 950;
+  letter-spacing: .045em;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 2px rgba(255, 226, 142, 1), 0 0 9px rgba(255, 176, 0, .72);
+  text-transform: uppercase;
+  white-space: nowrap;
+  -webkit-text-stroke: .55px currentColor;
+}
+.tubeDisplayFooter {
+  display: grid;
+  grid-template-areas:
+    "lines chronology"
+    "attribution attribution";
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 2px;
+  height: 14%;
+  padding: clamp(7px, 1.3vw, 13px) clamp(16px, 3.5vw, 34px);
+  border-top: 1px solid rgba(255, 176, 0, .32);
+  font-size: clamp(9px, 1.6vw, 17px);
+  letter-spacing: .055em;
+}
+.tubeDisplayLines,
+.tubeAttribution {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tubeDisplayLines {
+  grid-area: lines;
+  color: var(--tube-amber-bright);
+  font-size: 1.18em;
+  font-weight: 900;
+  text-shadow: 0 0 2px rgba(255, 214, 107, .95), 0 0 7px rgba(255, 176, 0, .5);
+  text-transform: uppercase;
+  -webkit-text-stroke: .35px currentColor;
+}
+.tubeDisplayChronology {
+  align-items: baseline;
+  display: flex;
+  gap: clamp(12px, 2.4vw, 28px);
+  grid-area: chronology;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+.tubeDisplayDate {
+  color: var(--tube-amber);
+  font-size: 1em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.tubeDisplayClock {
+  color: var(--tube-amber-bright);
+  font-size: 1.5em;
+  font-weight: 950;
+  letter-spacing: .08em;
+}
+.tubeAttribution {
+  font-size: .68em;
+  grid-area: attribution;
+  opacity: .58;
+  text-align: right;
+}
+.busDisplay {
+  position: relative;
+  isolation: isolate;
+  height: 100%;
+  overflow: hidden;
+  border: clamp(7px, 1.4vw, 14px) solid var(--tube-shell);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 1.5px 1.5px, rgba(255, 176, 0, .055) 1.05px, transparent 1.4px) 0 0 / 4px 4px,
+    linear-gradient(#080806, #030302);
+  color: var(--tube-amber);
+  box-shadow: inset 0 0 0 2px #000, inset 0 0 60px rgba(0, 0, 0, .9);
+  font-family: Consolas, "SFMono-Regular", "Roboto Mono", monospace;
+}
+.busDisplay::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(0, 0, 0, .13) 4px);
+  mix-blend-mode: multiply;
+}
+.busDisplayHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  height: 22%;
+  padding: clamp(14px, 3vw, 28px) clamp(16px, 3.5vw, 34px) clamp(10px, 1.8vw, 18px);
+  border-bottom: 1px solid rgba(255, 176, 0, .32);
+  text-transform: uppercase;
+}
+.busDisplayStop {
+  overflow: hidden;
+  font-size: clamp(22px, 4.4vw, 55px);
+  font-weight: 900;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.busDisplayDirection {
+  flex: 0 0 auto;
+  max-width: 38%;
+  overflow: hidden;
+  font-size: clamp(12px, 2vw, 24px);
+  font-weight: 800;
+  letter-spacing: .07em;
+  opacity: .9;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.busRows {
+  display: grid;
+  grid-template-rows: repeat(var(--bus-line-count, 5), minmax(0, 1fr));
+  height: 64%;
+  padding: clamp(8px, 1.4vw, 16px) clamp(16px, 3.5vw, 34px);
+}
+.busRow {
+  display: grid;
+  grid-template-columns: clamp(58px, 10vw, 118px) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(10px, 2vw, 24px);
+  min-height: 0;
+  border-bottom: 1px dotted rgba(255, 176, 0, .2);
+  font-size: clamp(19px, 3.7vw, 46px);
+  font-weight: 850;
+  line-height: 1;
+}
+.busRow:last-child { border-bottom: 0; }
+.busRoute { color: var(--tube-amber-bright); font-weight: 950; }
+.busDestination { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.busDue { color: var(--tube-amber-bright); text-align: right; white-space: nowrap; }
+.busDisplayFooter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  height: 14%;
+  padding: clamp(7px, 1.3vw, 13px) clamp(16px, 3.5vw, 34px);
+  border-top: 1px solid rgba(255, 176, 0, .32);
+  font-size: clamp(10px, 1.7vw, 18px);
+  letter-spacing: .055em;
+}
+.busDisplayRoutes {
+  overflow: hidden;
+  color: var(--tube-amber-bright);
+  font-size: 1.18em;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.busAttribution { opacity: .7; text-align: right; white-space: nowrap; }
+body[data-dot-style="crisp"] .tubeDotText {
+  text-shadow: 0 0 1px rgba(255, 214, 107, .95), 0 0 5px rgba(255, 176, 0, .42);
+  -webkit-text-stroke: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+@media (hover: none) and (pointer: coarse) {
+  body:not([data-dot-style="matrix"]) .tubeDotText {
+    text-shadow: 0 0 1px rgba(255, 214, 107, .95), 0 0 5px rgba(255, 176, 0, .42);
+    -webkit-text-stroke: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+@media (max-width: 620px) {
+  .tubeDisplayHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    height: 19%;
+    padding: 18px 16px 10px;
+  }
+  .tubeDisplayStation { max-width: 100%; font-size: clamp(24px, 7.8vw, 36px); }
+  .tubeDisplayPlatform { max-width: 100%; font-size: clamp(12px, 3.6vw, 17px); text-align: left; }
+  .tubePageLabel { top: 21%; right: 16px; font-size: 12px; opacity: .9; }
+  .tubeRows { height: 67%; padding: 7% 16px 0; }
+  .tubeRow {
+    grid-template-columns: 20px minmax(0, 1fr) auto;
+    align-content: center;
+    align-items: start;
+    gap: 7px;
+    font-size: clamp(23px, 6.7vw, 32px);
+    line-height: 1.18;
+  }
+  .tubeRowDestination {
+    display: -webkit-box;
+    max-height: 2.36em;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .tubeRowDue { font-size: .82em; line-height: 1.35; }
+  .tubeDisplayFooter {
+    height: 16%;
+    padding: 10px 16px;
+    font-size: clamp(10px, 3vw, 13px);
+  }
+  .tubeDisplayLines { font-size: clamp(13px, 3.8vw, 17px); }
+  .tubeSystemMessage {
+    right: 16px;
+    bottom: 14%;
+    left: 16px;
+    height: calc(67% / var(--tube-line-count, 4));
+    font-size: clamp(14px, 4.8vw, 22px);
+  }
+  .tubeAttribution { font-size: clamp(9px, 2.5vw, 11px); }
+  .busDisplayHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    height: 20%;
+    padding: 18px 16px 10px;
+  }
+  .busDisplayStop { max-width: 100%; font-size: clamp(25px, 8vw, 37px); }
+  .busDisplayDirection { max-width: 100%; font-size: clamp(13px, 4vw, 18px); text-align: left; }
+  .busRows { height: 66%; padding: 8px 16px; }
+  .busRow {
+    grid-template-columns: 58px minmax(0, 1fr) auto;
+    gap: 8px;
+    font-size: clamp(21px, 6.4vw, 30px);
+  }
+  .busDestination {
+    display: -webkit-box;
+    max-height: 2.2em;
+    overflow: hidden;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .busDue { font-size: .72em; }
+  .busDisplayFooter { height: 14%; padding: 10px 16px; font-size: clamp(10px, 3vw, 13px); }
+  .busAttribution { font-size: clamp(9px, 2.5vw, 11px); }
+}
+@media (orientation: portrait) {
+  .tubeDisplayHeader { height: 19%; }
+  .tubeRows { height: 65%; }
+  .tubeDisplayFooter { height: 16%; }
+  .tubeDisplayChronology { gap: 14px; }
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+}
+body[data-density="dense"] {
+  --display-scale: 0.9;
+}
+body[data-density="ultra"] {
+  --display-scale: 0.8;
+}
+body[data-text-scale="large"] h1 {
+  font-size: clamp(34px, 7vw, 86px);
+}
+body[data-text-scale="large"] .displayLabel {
+  font-size: clamp(17px, 2.7vw, 34px);
+}
+body[data-text-scale="large"] .time,
+body[data-text-scale="large"] .dest,
+body[data-text-scale="large"] .plat {
+  font-size: clamp(25px, 4.7vw, 56px);
+}
+body[data-text-scale="large"] .status {
+  font-size: clamp(17px, 3.1vw, 38px);
+}
+body[data-text-scale="compact"] .calling {
+  font-size: clamp(11px, 1.7vw, 20px);
+}
+main {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto auto;
+  gap: clamp(5px, 1.1vh, 10px);
+  padding: clamp(10px, 2vw, 20px);
+}
+@supports (padding: max(0px)) {
+  main {
+    min-height: 100dvh;
+    height: auto;
+    padding-top: max(clamp(10px, 2vw, 20px), env(safe-area-inset-top));
+    padding-right: max(clamp(10px, 2vw, 20px), env(safe-area-inset-right));
+    padding-bottom: max(clamp(10px, 2vw, 20px), env(safe-area-inset-bottom));
+    padding-left: max(clamp(10px, 2vw, 20px), env(safe-area-inset-left));
+  }
+}
+body[data-density="dense"] main,
+body[data-density="ultra"] main {
+  gap: clamp(4px, 0.8vh, 8px);
+  padding: clamp(8px, 1.6vw, 16px);
+}
+@supports (padding: max(0px)) {
+  body[data-density="dense"] main,
+  body[data-density="ultra"] main {
+    padding-top: max(clamp(8px, 1.6vw, 16px), env(safe-area-inset-top));
+    padding-right: max(clamp(8px, 1.6vw, 16px), env(safe-area-inset-right));
+    padding-bottom: max(clamp(8px, 1.6vw, 16px), env(safe-area-inset-bottom));
+    padding-left: max(clamp(8px, 1.6vw, 16px), env(safe-area-inset-left));
+  }
+}
+header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(8px, 2vw, 18px);
+  align-items: end;
+  border-bottom: 4px solid var(--line-strong);
+  padding-bottom: clamp(6px, 1.2vh, 10px);
+}
+h1 {
+  margin: 0;
+  min-width: 0;
+  font-size: clamp(30px, 6.4vw, 78px);
+  text-transform: uppercase;
+  line-height: 0.95;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body[data-density="dense"] h1 {
+  font-size: clamp(27px, 5.7vw, 70px);
+}
+body[data-density="ultra"] h1 {
+  font-size: clamp(24px, 5vw, 62px);
+}
+.titleStack {
+  min-width: 0;
+}
+.displayLabel {
+  color: var(--muted);
+  font-size: clamp(15px, 2.4vw, 30px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+body[data-density="dense"] .displayLabel,
+body[data-density="ultra"] .displayLabel {
+  font-size: clamp(13px, 2vw, 25px);
+  margin-top: 2px;
+}
+h1.tightTitle {
+  font-size: clamp(26px, 5.3vw, 68px);
+}
+h1.veryTightTitle {
+  font-size: clamp(22px, 4.4vw, 58px);
+}
+#clock {
+  color: var(--clock);
+  font-family: Consolas, "SFMono-Regular", "Roboto Mono", monospace;
+  font-size: clamp(22px, 4.8vw, 54px);
+  font-weight: 700;
+  white-space: nowrap;
+}
+body[data-density="dense"] #clock,
+body[data-density="ultra"] #clock {
+  font-size: clamp(20px, 4vw, 46px);
+}
+.head, .service {
+  display: grid;
+  grid-template-columns: minmax(106px, 0.58fr) minmax(0, 2.14fr) minmax(112px, 0.82fr) minmax(62px, 0.4fr);
+  column-gap: clamp(8px, 1.35vw, 15px);
+  align-items: baseline;
+}
+.head {
+  background: var(--surface);
+  color: var(--muted);
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--line);
+  border-top: 1px solid var(--line);
+  padding: 5px 6px 6px;
+  font-size: clamp(12px, 1.7vw, 20px);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+body[data-density="dense"] .head,
+body[data-density="ultra"] .head {
+  padding-bottom: 4px;
+}
+.service {
+  min-height: clamp(52px, 8vh, 84px);
+  border-bottom: 1px solid var(--line);
+  padding: clamp(4px, 0.8vh, 7px) 6px;
+}
+body[data-density="dense"] .service {
+  min-height: clamp(45px, 7vh, 72px);
+  padding: 4px 0;
+}
+body[data-density="ultra"] .service {
+  min-height: clamp(40px, 6.1vh, 64px);
+  padding: 3px 0;
+}
+.service:nth-child(odd) {
+  background: var(--row-alt);
+}
+body.compact .service {
+  min-height: clamp(40px, 6.2vh, 62px);
+  padding: 4px 0;
+}
+.time, .dest, .plat {
+  font-size: clamp(22px, 4.2vw, 50px);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.time {
+  text-overflow: clip;
+}
+.flightHead,
+.flightNo {
+  display: none;
+}
+body.flightBoard .head,
+body.flightBoard .service {
+  grid-template-columns: minmax(88px, 0.56fr) minmax(0, 2.05fr) minmax(112px, 0.82fr) minmax(118px, 0.9fr) minmax(78px, 0.5fr);
+}
+body.flightBoard .head {
+  background: var(--flight-head-bg);
+  border-color: var(--flight-head-bg);
+  color: var(--flight-head-text);
+}
+body.flightBoard .flightHead,
+body.flightBoard .flightNo {
+  display: block;
+}
+body.flightBoard .time,
+body.flightBoard .plat,
+body.flightBoard .flightNo {
+  color: var(--flight-accent);
+}
+body.flightBoard.flightDepartures .time,
+body.flightBoard.flightDepartures .plat,
+body.flightBoard.flightDepartures .flightNo {
+  color: var(--flight-departure-accent);
+}
+body.flightBoard .dest {
+  color: var(--flight-dest);
+}
+body.flightBoard .flightNo {
+  font-family: Consolas, "SFMono-Regular", "Roboto Mono", monospace;
+  font-size: clamp(18px, 3.2vw, 40px);
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+body.flightBoard .flightNo.flash {
+  animation: flightNumberFlash 0.35s ease-out;
+}
+@keyframes flightNumberFlash {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+body.flightBoard .plat {
+  text-align: right;
+}
+body.flightBoard .calling {
+  display: none;
+}
+body[data-density="dense"] .time,
+body[data-density="dense"] .dest,
+body[data-density="dense"] .plat,
+body[data-density="ultra"] .time,
+body[data-density="ultra"] .dest,
+body[data-density="ultra"] .plat {
+  font-size: clamp(20px, 3.7vw, 42px);
+}
+.time,
+.plat {
+  font-family: Consolas, "SFMono-Regular", "Roboto Mono", monospace;
+}
+.status {
+  font-size: clamp(15px, 2.8vw, 34px);
+  font-weight: 700;
+  color: var(--good);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body[data-density="dense"] .status,
+body[data-density="ultra"] .status {
+  font-size: clamp(14px, 2.4vw, 28px);
+}
+.status.warn { color: var(--warn); }
+.status.bad { color: var(--bad); }
+.mobileStatus { display: none; }
+.plat { text-align: right; }
+.platformHead { text-align: right; }
+.statusHead { text-align: left; }
+.calling {
+  grid-column: 2 / 5;
+  color: var(--calling);
+  font-size: clamp(12px, 2vw, 24px);
+  line-height: 1.12;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-top: 2px;
+}
+body[data-density="dense"] .calling,
+body[data-density="ultra"] .calling {
+  font-size: clamp(11px, 1.8vw, 20px);
+  padding-top: 1px;
+}
+.callingText {
+  display: inline-block;
+  min-width: 100%;
+  padding-left: 0;
+  vertical-align: bottom;
+}
+.callingText.scroll {
+  animation-duration: var(--calling-scroll-duration, 28s);
+  animation-iteration-count: infinite;
+  animation-name: callingTicker;
+  animation-timing-function: linear;
+  padding-left: 100%;
+}
+@keyframes callingTicker {
+  0%, 7% { transform: translateX(0); }
+  92%, 100% { transform: translateX(calc(-1 * var(--calling-scroll-distance, 100%))); }
+}
+.rotator {
+  border-top: 2px solid var(--line);
+  display: grid;
+  gap: 3px;
+  padding-top: 6px;
+}
+.rotator[hidden] {
+  display: none;
+}
+.rotatorLabel {
+  color: var(--muted);
+  font-size: clamp(13px, 2vw, 18px);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.rotator .service {
+  background: var(--panel);
+  border-bottom: 0;
+  min-height: auto;
+  padding: 6px 8px;
+}
+.rotator .callingText {
+  animation: none !important;
+  max-width: 100%;
+  overflow: hidden;
+  padding-left: 0 !important;
+  text-overflow: ellipsis;
+  transform: none !important;
+}
+footer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: clamp(8px, 1.4vw, 14px);
+  align-items: center;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  padding-top: 5px;
+  color: var(--muted);
+  font-size: clamp(12px, 1.8vw, 18px);
+  min-width: 0;
+}
+body.flightBoard footer {
+  border-top-color: #3b4655;
+  background: #090909;
+  color: #a8b0c2;
+}
+#message,
+#updated {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#updated {
+  justify-self: end;
+}
+.dataBadge {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: clamp(12px, 1.8vw, 18px);
+  font-weight: 700;
+  letter-spacing: 0;
+  padding: 5px 8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.dataBadge.live {
+  border-color: #12b76a;
+  color: #32d583;
+}
+body.flightBoard .dataBadge.live {
+  border-color: #12b76a;
+  color: #32d583;
+}
+.dataBadge.demo {
+  border-color: #f79009;
+  color: #fdb022;
+}
+.dataBadge.local {
+  border-color: #84caff;
+  color: #84caff;
+}
+.empty {
+  color: var(--warn);
+  font-size: clamp(22px, 4vw, 42px);
+  padding-top: 24px;
+}
+#services {
+  min-height: 0;
+  overflow: hidden;
+}
+body.browserDisplay:not(.tubeBoard):not(.busBoard) main {
+  height: 100dvh;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+}
+body.browserDisplay main > footer { padding-right: 48px; }
+#browserBoardControls[hidden] { display: none; }
+#browserBoardControls {
+  position: fixed;
+  right: max(8px, env(safe-area-inset-right));
+  bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 20;
+  color: var(--text);
+  font: 16px/1.3 Arial, sans-serif;
+}
+#browserBoardControls summary {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  cursor: pointer;
+  list-style: none;
+  font-size: 24px;
+}
+#browserBoardControls summary::-webkit-details-marker { display: none; }
+.browserBoardActions {
+  position: absolute;
+  bottom: 44px;
+  right: 0;
+  width: 200px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  box-shadow: 0 6px 24px #0006;
+}
+.browserBoardActions a, .browserBoardActions button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.browserBoardActions :is(a, button):hover,
+.browserBoardActions :is(a, button):focus-visible { background: var(--surface); }
+@media (max-width: 720px) {
+  main {
+    gap: 7px;
+    padding: 12px;
+  }
+  header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  h1 {
+    font-size: clamp(28px, 9.5vw, 52px);
+    white-space: normal;
+  }
+  #clock {
+    font-size: clamp(20px, 7vw, 38px);
+    justify-self: end;
+  }
+  .head, .service { grid-template-columns: 84px minmax(0, 1fr) 42px; }
+  .status, .statusHead { display: none; }
+  .mobileStatus {
+    display: inline-block;
+    margin-left: 8px;
+    color: var(--good);
+    font-size: 0.46em;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+    vertical-align: 0.22em;
+  }
+  .mobileStatus.warn { color: var(--warn); }
+  .mobileStatus.bad { color: var(--bad); }
+  .time, .dest, .plat { font-size: clamp(20px, 6.6vw, 34px); }
+  .calling { font-size: clamp(12px, 3.8vw, 18px); }
+  .calling { grid-column: 2 / 4; }
+  body.flightBoard .head,
+  body.flightBoard .service {
+    grid-template-columns: 70px minmax(0, 1.5fr) minmax(76px, 0.7fr) 44px;
+  }
+  body.flightBoard .status,
+  body.flightBoard .statusHead {
+    display: none;
+  }
+  body.flightBoard .flightNo {
+    font-size: clamp(16px, 5vw, 28px);
+  }
+  footer {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  #updated {
+    display: none;
+  }
+  .dataBadge {
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+}
+body.platformFiltered .head,
+body.platformFiltered .service {
+  grid-template-columns: minmax(106px, 0.58fr) minmax(0, 2.19fr) minmax(112px, 0.82fr);
+}
+body.flightBoard.platformFiltered .head,
+body.flightBoard.platformFiltered .service {
+  grid-template-columns: minmax(88px, 0.56fr) minmax(0, 2.05fr) minmax(112px, 0.82fr) minmax(118px, 0.9fr) minmax(78px, 0.5fr);
+}
+body.platformFiltered .plat,
+body.platformFiltered .platformHead {
+  display: none;
+}
+body.flightBoard.platformFiltered .plat,
+body.flightBoard.platformFiltered .platformHead {
+  display: block;
+}
+body.platformFiltered .calling {
+  grid-column: 2 / 4;
+}
+@media (max-width: 720px) {
+  body.platformFiltered .head,
+  body.platformFiltered .service {
+    grid-template-columns: 84px minmax(0, 1fr);
+  }
+  body.platformFiltered .calling { grid-column: 2 / 3; }
+  body.flightBoard.platformFiltered .head,
+  body.flightBoard.platformFiltered .service {
+    grid-template-columns: 70px minmax(0, 1.45fr) minmax(76px, .75fr) 44px;
+  }
+}
+@media (max-width: 430px) {
+  main { gap: 5px; }
+  h1 { font-size: clamp(27px, 9vw, 40px); }
+  .displayLabel { font-size: 13px; }
+  .head, .service { grid-template-columns: 68px minmax(0, 1fr) 36px; }
+  body.platformFiltered .head,
+  body.platformFiltered .service { grid-template-columns: 68px minmax(0, 1fr); }
+  .time, .dest, .plat { font-size: clamp(19px, 6vw, 27px); }
+  .calling { font-size: clamp(11px, 3.5vw, 15px); }
+  body.flightBoard .head,
+  body.flightBoard .service,
+  body.flightBoard.platformFiltered .head,
+  body.flightBoard.platformFiltered .service {
+    grid-template-columns: 62px minmax(0, 1.4fr) minmax(68px, .75fr) 34px;
+  }
+  footer { font-size: 11px; }
+}
+.demoNav{height:110px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 20px;background:#171c19;color:#fff;font:15px system-ui}.demoNav a{color:#ffe29a}.demoNav button{padding:8px 12px;background:#262f29;color:#fff;border:1px solid #778379;border-radius:5px;cursor:pointer}.demoNav button[aria-pressed=true]{background:#ffd26b;color:#111}.demoNav small{flex-basis:100%;text-align:center;color:#c6cfc8}body.browserDisplay{height:100dvh;display:flex;flex-direction:column}.demoNav{flex-shrink:0}body.browserDisplay main{height:calc(100dvh - 110px);min-height:0;flex:1}@media(max-width:600px){.demoNav{height:152px;font-size:13px;justify-content:center;padding:8px}.demoNav>div{order:2;width:100%;text-align:center}.demoNav small{order:3;font-size:11px}body.browserDisplay main{height:calc(100dvh - 152px)}}
+</style>
+</head>
+<body><nav class="demoNav" aria-label="Demo controls"><a href="https://destinationboard.co.uk/">← Destination Board</a><div role="group" aria-label="Choose sample board"><button data-demo="rail" aria-pressed="true">Trains</button><button data-demo="bus" aria-pressed="false">London buses</button><button data-demo="tube" aria-pressed="false">Tube</button></div><a href="https://destinationboard.co.uk/signup">Create your board ↗</a><small>Interactive demo · Sample services, not live · No sign-in needed</small></nav>
+<main>
+  <header>
+    <div class="titleStack">
+      <h1 id="title">Destination Board</h1>
+      <div class="displayLabel" id="displayLabel"></div>
+    </div>
+    <div id="clock">--:--</div>
+    
+  </header>
+  <section class="head">
+    <div>Time</div>
+    <div id="placeHead">Destination</div>
+    <div class="flightHead">Flight</div>
+    <div class="statusHead">Status</div>
+    <div class="platformHead">Plat</div>
+  </section>
+  <section id="services"><div class="empty">Loading board</div></section>
+  <section class="rotator" id="rotator" hidden>
+    <div class="rotatorLabel" id="rotatorLabel">More</div>
+    <div id="rotatorService"></div>
+  </section>
+  <section class="tubeDisplay" id="tubeDisplay" aria-label="London Underground arrivals" hidden>
+    <div class="tubeDisplayHeader">
+      <div class="tubeDisplayStation tubeDotText" id="tubeDisplayStation">DESTINATION BOARD</div>
+      <div class="tubeDisplayPlatform tubeDotText" id="tubeDisplayPlatform">LIVE ARRIVALS</div>
+    </div>
+    <div class="tubePageLabel tubeDotText" id="tubePageLabel" aria-live="polite">NOW</div>
+    <div class="tubeRows" id="tubeRows"></div>
+    <div class="tubeSystemMessage tubeDotText" id="tubeSystemMessage" aria-live="polite" hidden></div>
+    <div class="tubeDisplayFooter">
+      <div class="tubeDisplayLines tubeDotText" id="tubeDisplayLines">LONDON UNDERGROUND</div>
+      <div class="tubeDisplayChronology tubeDotText">
+        <span class="tubeDisplayDate" id="tubeDisplayDate">---</span>
+        <span class="tubeDisplayClock" id="tubeDisplayClock">--:--</span>
+      </div>
+      <div class="tubeAttribution">Illustrative sample arrivals — not live</div>
+    </div>
+  </section>
+  <section class="busDisplay" id="busDisplay" aria-label="London bus arrivals" hidden>
+    <div class="busDisplayHeader">
+      <div class="busDisplayStop tubeDotText" id="busDisplayStop">BUS STOP</div>
+      <div class="busDisplayDirection tubeDotText" id="busDisplayDirection">LIVE ARRIVALS</div>
+    </div>
+    <div class="busRows" id="busRows"></div>
+    <div class="busDisplayFooter">
+      <div class="busDisplayRoutes tubeDotText" id="busDisplayRoutes">LONDON BUSES</div>
+      <div class="busAttribution">Illustrative sample arrivals — not live</div>
+    </div>
+  </section>
+  <footer>
+    <div class="dataBadge" id="dataBadge">Connecting</div>
+    <div id="message">Connecting</div>
+    <div id="updated">--</div>
+  </footer>
+</main>
+<script>
+const params = new URLSearchParams();
+const isNativeDisplay = false;
+document.body.classList.add("browserDisplay");
+let boardId = "", appSessionToken = "", token = "", displayUserId = "public-demo";
+const themeStorageKey = "public-demo-theme", compactStorageKey = "public-demo-compact";
+const titleEl = document.getElementById("title");
+const displayLabelEl = document.getElementById("displayLabel");
+const clockEl = document.getElementById("clock");
+const servicesEl = document.getElementById("services");
+const rotatorEl = document.getElementById("rotator");
+const rotatorLabelEl = document.getElementById("rotatorLabel");
+const rotatorServiceEl = document.getElementById("rotatorService");
+const placeHeadEl = document.getElementById("placeHead");
+const messageEl = document.getElementById("message");
+const updatedEl = document.getElementById("updated");
+const dataBadgeEl = document.getElementById("dataBadge");
+const tubeDisplayEl = document.getElementById("tubeDisplay");
+const tubeDisplayStationEl = document.getElementById("tubeDisplayStation");
+const tubeDisplayPlatformEl = document.getElementById("tubeDisplayPlatform");
+const tubePageLabelEl = document.getElementById("tubePageLabel");
+const tubeRowsEl = document.getElementById("tubeRows");
+const tubeSystemMessageEl = document.getElementById("tubeSystemMessage");
+const tubeDisplayLinesEl = document.getElementById("tubeDisplayLines");
+const tubeDisplayDateEl = document.getElementById("tubeDisplayDate");
+const tubeDisplayClockEl = document.getElementById("tubeDisplayClock");
+const busDisplayEl = document.getElementById("busDisplay");
+const busDisplayStopEl = document.getElementById("busDisplayStop");
+const busDisplayDirectionEl = document.getElementById("busDisplayDirection");
+const busRowsEl = document.getElementById("busRows");
+const busDisplayRoutesEl = document.getElementById("busDisplayRoutes");
+const themeOrder = ["dark", "amber", "light", "quiet"];
+let displayTheme = "dark";
+let compactDisplay = false;
+let textScale = compactDisplay ? "compact" : "auto";
+let fullscreenPreference = "device";
+let motionPreference = "animated";
+let dotStylePreference = "auto";
+let overflowServices = [];
+let overflowIndex = 0;
+let refreshTimer = null;
+let boardTimezone = "";
+let tubePageIndex = 0;
+let tubePageTimer = null;
+let tubeRenderedBoardKey = "";
+let tubeBaseFooterText = "LONDON UNDERGROUND";
+let systemFooterTimer = null;
+let systemFooterRestoreTimer = null;
+let systemFooterIndex = 0;
+let tubeMessageRevealTimer = null;
+let tubeMessageRevealIndex = 0;
+let tubeMessagePool = [];
+let tubeMessageBoardKey = "";
+let tubeUrgentMessageKey = "";
+let tubeMessageUrgent = false;
+let tubeCoveredRowEl = null;
+let tubeRegularMessageDueAt = 0;
+let tubePausedRegularDelay = null;
+const systemFooterMessages = {
+  rail: [
+    "Please stand behind the yellow line",
+    "Please allow passengers off first",
+    "Take care when boarding",
+    "Please keep your belongings with you",
+    "Check your journey before you travel"
+  ],
+  tube: [
+    "Stand clear of the doors",
+    "Let passengers off first",
+    "Take care when boarding",
+    "Keep your belongings with you"
+  ],
+  flight: [
+    "Please do not leave baggage unattended",
+    "Keep your boarding pass ready",
+    "Check screens for gate information",
+    "Proceed to your gate when displayed",
+    "Allow plenty of time to reach your gate"
+  ]
+};
+
+function clearSystemFooterRotation() {
+  if (systemFooterTimer) clearTimeout(systemFooterTimer);
+  if (systemFooterRestoreTimer) clearTimeout(systemFooterRestoreTimer);
+  if (tubeMessageRevealTimer) clearInterval(tubeMessageRevealTimer);
+  systemFooterTimer = null;
+  systemFooterRestoreTimer = null;
+  tubeMessageRevealTimer = null;
+  tubeMessagePool = [];
+  tubeMessageBoardKey = "";
+  tubeUrgentMessageKey = "";
+  tubeMessageUrgent = false;
+  tubeRegularMessageDueAt = 0;
+  tubePausedRegularDelay = null;
+  if (tubeCoveredRowEl) tubeCoveredRowEl.classList.remove("tubeMessageCovered");
+  tubeCoveredRowEl = null;
+  tubeSystemMessageEl.removeAttribute("aria-label");
+  tubeSystemMessageEl.textContent = "";
+  tubeSystemMessageEl.hidden = true;
+}
+
+function revealTubeMessage(message) {
+  const text = String(message || "");
+  if (tubeMessageRevealTimer) clearInterval(tubeMessageRevealTimer);
+  tubeMessageRevealTimer = null;
+  tubeSystemMessageEl.hidden = false;
+  tubeSystemMessageEl.setAttribute("aria-label", text);
+  if (motionPreference === "still" || text.length < 2) {
+    tubeSystemMessageEl.textContent = text;
+    return;
+  }
+  const cells = Array.from(text, () => " ");
+  const indexes = Array.from(text, (_character, index) => index);
+  const centreOut = tubeMessageRevealIndex % 2 === 0;
+  tubeMessageRevealIndex += 1;
+  if (centreOut) {
+    const centre = (text.length - 1) / 2;
+    indexes.sort((left, right) => Math.abs(left - centre) - Math.abs(right - centre));
+  }
+  const charactersPerStep = Math.max(1, Math.ceil(indexes.length / 18));
+  const revealNext = () => {
+    indexes.splice(0, charactersPerStep).forEach(index => {
+      cells[index] = text[index] === " " ? " " : text[index];
+    });
+    tubeSystemMessageEl.textContent = cells.join("");
+    if (!indexes.length) {
+      clearInterval(tubeMessageRevealTimer);
+      tubeMessageRevealTimer = null;
+    }
+  };
+  revealNext();
+  tubeMessageRevealTimer = setInterval(revealNext, 110);
+}
+
+function positionTubeMessage(urgent = false) {
+  const rows = [...tubeRowsEl.querySelectorAll(".tubeRow")];
+  const targetRow = urgent && !tubeIsPortrait() && rows.length > 1 ? rows[1] : rows[rows.length - 1];
+  if (!targetRow) return;
+  if (tubeCoveredRowEl && tubeCoveredRowEl !== targetRow) {
+    tubeCoveredRowEl.classList.remove("tubeMessageCovered");
+  }
+  targetRow.classList.add("tubeMessageCovered");
+  tubeCoveredRowEl = targetRow;
+  const boardRect = tubeDisplayEl.getBoundingClientRect();
+  const rowRect = targetRow.getBoundingClientRect();
+  tubeSystemMessageEl.style.top = `${Math.max(0, rowRect.top - boardRect.top - tubeDisplayEl.clientTop)}px`;
+  tubeSystemMessageEl.style.bottom = "auto";
+  tubeSystemMessageEl.style.height = `${rowRect.height}px`;
+}
+
+function randomTubeMessageDelay() {
+  return 120000 + Math.floor(Math.random() * 180001);
+}
+
+function scheduleNextTubeMessage(delayMs = randomTubeMessageDelay()) {
+  if (systemFooterTimer) clearTimeout(systemFooterTimer);
+  tubeRegularMessageDueAt = Date.now() + Math.max(0, delayMs);
+  systemFooterTimer = setTimeout(showNextTubeMessage, Math.max(0, delayMs));
+}
+
+function restoreTubeRows() {
+  const wasUrgent = tubeMessageUrgent;
+  const resumeDelay = tubePausedRegularDelay;
+  if (tubeMessageRevealTimer) clearInterval(tubeMessageRevealTimer);
+  tubeMessageRevealTimer = null;
+  systemFooterRestoreTimer = null;
+  tubeSystemMessageEl.removeAttribute("aria-label");
+  tubeSystemMessageEl.textContent = "";
+  tubeSystemMessageEl.hidden = true;
+  if (tubeCoveredRowEl) tubeCoveredRowEl.classList.remove("tubeMessageCovered");
+  tubeCoveredRowEl = null;
+  tubeMessageUrgent = false;
+  tubePausedRegularDelay = null;
+  if (tubeMessagePool.length) {
+    scheduleNextTubeMessage(wasUrgent && resumeDelay !== null ? resumeDelay : randomTubeMessageDelay());
+  }
+}
+
+function showTubeMessage(message, urgent = false) {
+  if (urgent && systemFooterTimer) {
+    tubePausedRegularDelay = Math.max(0, tubeRegularMessageDueAt - Date.now());
+    clearTimeout(systemFooterTimer);
+  } else if (!urgent) {
+    if (systemFooterTimer) clearTimeout(systemFooterTimer);
+    tubePausedRegularDelay = null;
+  }
+  if (systemFooterRestoreTimer) clearTimeout(systemFooterRestoreTimer);
+  systemFooterTimer = null;
+  tubeRegularMessageDueAt = 0;
+  systemFooterRestoreTimer = null;
+  tubeMessageUrgent = urgent;
+  revealTubeMessage(message);
+  requestAnimationFrame(() => positionTubeMessage(urgent));
+  systemFooterRestoreTimer = setTimeout(restoreTubeRows, 6000);
+}
+
+function showNextTubeMessage() {
+  systemFooterTimer = null;
+  tubeRegularMessageDueAt = 0;
+  if (displayReconnecting || !tubeMessagePool.length) {
+    scheduleNextTubeMessage();
+    return;
+  }
+  const message = tubeMessagePool[systemFooterIndex % tubeMessagePool.length];
+  systemFooterIndex += 1;
+  showTubeMessage(message);
+}
+
+function scheduleTubeMessageRotation(customMessage = "", state = {}) {
+  const boardKey = String(boardId || state.title || "tube");
+  if (tubeMessageBoardKey !== boardKey) {
+    clearSystemFooterRotation();
+    tubeMessageBoardKey = boardKey;
+  }
+  let messages = [...systemFooterMessages.tube];
+  if (customMessage) messages = [customMessage, ...messages];
+  const station = String(state.title || "").toLowerCase();
+  const lines = new Set((state.services || []).map(service => String(service.line || service.operator || "").toLowerCase()));
+  const mindTheGapApplies =
+    (station.includes("bank") && lines.has("central")) ||
+    (station.includes("embankment") && (lines.has("northern") || lines.has("bakerloo")));
+  if (mindTheGapApplies) messages = ["Mind the gap", ...messages];
+  tubeMessagePool = [...new Set(messages.filter(Boolean))];
+
+  const nearest = (state.services || [])[0] || {};
+  const currentLocation = String(nearest.currentLocation || "").toLowerCase();
+  let urgentMessage = "";
+  if (nearest.due === "Due" && currentLocation) {
+    const inThisPlatform = currentLocation.includes("at platform") ||
+      (currentLocation.includes(station) && currentLocation.includes("platform"));
+    urgentMessage = inThisPlatform ? "**TRAIN NOW IN PLATFORM**" : "**TRAIN APPROACHING**";
+  }
+  const urgentKey = urgentMessage
+    ? [urgentMessage, nearest.id || nearest.rid || nearest.destination || ""].join("|")
+    : "";
+  if (urgentKey && urgentKey !== tubeUrgentMessageKey) {
+    tubeUrgentMessageKey = urgentKey;
+    showTubeMessage(urgentMessage, true);
+    return;
+  }
+  if (!urgentKey) tubeUrgentMessageKey = "";
+  if (!systemFooterTimer && !systemFooterRestoreTimer) scheduleNextTubeMessage();
+}
+
+function scheduleSystemFooterRotation(kind, baseText, customMessage = "", state = {}) {
+  if (kind === "tube") {
+    scheduleTubeMessageRotation(customMessage, state);
+    return;
+  }
+  clearSystemFooterRotation();
+  const target = messageEl;
+  if (customMessage) {
+    target.textContent = customMessage;
+    return;
+  }
+  let messages = [...(systemFooterMessages[kind] || systemFooterMessages.rail)];
+  const firstMessageDelay = 12000;
+  const restore = () => {
+    target.textContent = baseText;
+    systemFooterTimer = setTimeout(showSystemMessage, 18000);
+  };
+  const showSystemMessage = () => {
+    if (displayReconnecting) return;
+    const message = messages[systemFooterIndex % messages.length];
+    systemFooterIndex += 1;
+    target.textContent = message;
+    systemFooterRestoreTimer = setTimeout(restore, 6000);
+  };
+  target.textContent = baseText;
+  systemFooterTimer = setTimeout(showSystemMessage, firstMessageDelay);
+}
+
+function showDisplayLinkEnded(message = "This screen link has ended.") {
+  localStorage.removeItem("trainboardDeviceToken");
+  localStorage.removeItem(tokenStorageKey);
+  token = "";
+  pairingCode = "";
+  pairingSecret = "";
+  boardTimezone = "";
+  clearTubePageRotation();
+  clearSystemFooterRotation();
+  document.body.classList.remove("tubeBoard");
+  document.body.classList.remove("busBoard");
+  tubeDisplayEl.hidden = true;
+  busDisplayEl.hidden = true;
+  titleEl.textContent = "LINK ENDED";
+  displayLabelEl.textContent = "";
+  placeHeadEl.textContent = "Destination";
+  servicesEl.innerHTML = `<div class="empty">${escapeText(message)}</div>`;
+  rotatorEl.hidden = true;
+  rotatorServiceEl.innerHTML = "";
+  dataBadgeEl.textContent = "Disconnected";
+  dataBadgeEl.className = "dataBadge fallback";
+  messageEl.textContent = "Create a new screen link from the app or portal.";
+  updatedEl.textContent = "";
+  scheduleRefresh(30000);
+}
+
+function escapeText(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  }[char]));
+}
+
+function statusClass(status) {
+  const text = String(status || "").toLowerCase();
+  if (text.includes("cancel")) return "bad";
+  if (text.includes("delay") || text.includes("expected") || text.startsWith("exp ")) return "warn";
+  return "";
+}
+
+function flightNumberHtml(service) {
+  const numbers = Array.isArray(service.flightNumbers) && service.flightNumbers.length
+    ? service.flightNumbers
+    : [service.flightNumber || service.operator || ""];
+  const cleanNumbers = numbers.map(number => String(number || "").trim()).filter(Boolean);
+  if (cleanNumbers.length <= 1) {
+    return `<div class="flightNo">${escapeText(cleanNumbers[0] || "")}</div>`;
+  }
+  return `<div class="flightNo" data-flight-numbers="${escapeText(JSON.stringify(cleanNumbers))}" data-flight-index="0" aria-label="${escapeText(cleanNumbers.join(", "))}">${escapeText(cleanNumbers[0])}</div>`;
+}
+
+function rotateFlightNumbers(advance = false) {
+  if (motionPreference === "still") return;
+  document.querySelectorAll(".flightNo[data-flight-numbers]").forEach(item => {
+    let numbers = [];
+    try {
+      numbers = JSON.parse(item.dataset.flightNumbers || "[]");
+    } catch (_error) {
+      numbers = [];
+    }
+    numbers = numbers.map(number => String(number || "").trim()).filter(Boolean);
+    if (numbers.length <= 1) return;
+    let index = Number(item.dataset.flightIndex || "0");
+    if (advance) {
+      index = (index + 1) % numbers.length;
+      item.dataset.flightIndex = String(index);
+      item.classList.remove("flash");
+      void item.offsetWidth;
+      item.classList.add("flash");
+    }
+    item.textContent = numbers[index] || numbers[0];
+  });
+}
+
+function applyDisplayOptions() {
+  document.body.dataset.theme = displayTheme;
+  document.body.dataset.textScale = textScale;
+  document.body.dataset.fullscreenPreference = fullscreenPreference;
+  document.body.dataset.motion = motionPreference;
+  document.body.dataset.dotStyle = dotStylePreference;
+  document.body.classList.toggle("compact", compactDisplay);
+  applyAutoDensity();
+}
+
+function applyBoardDisplaySettings(settings = {}) {
+  const boardTheme = String(settings.theme || "").toLowerCase();
+  const boardTextScale = String(settings.textScale || "").toLowerCase();
+  const boardFullscreen = String(settings.fullscreen || "").toLowerCase();
+  const boardMotion = String(settings.motion || "").toLowerCase();
+  const boardDotStyle = String(settings.dotStyle || "").toLowerCase();
+  if (themeOrder.includes(boardTheme)) {
+    displayTheme = boardTheme;
+  }
+  textScale = ["auto", "compact", "large"].includes(boardTextScale) ? boardTextScale : "auto";
+  compactDisplay = textScale === "compact";
+  fullscreenPreference = ["device", "prefer"].includes(boardFullscreen) ? boardFullscreen : "device";
+  motionPreference = ["animated", "still"].includes(boardMotion) ? boardMotion : "animated";
+  dotStylePreference = ["auto", "crisp", "matrix"].includes(boardDotStyle) ? boardDotStyle : "auto";
+  applyDisplayOptions();
+}
+
+function applyAutoDensity() {
+  const width = window.innerWidth || document.documentElement.clientWidth || 1024;
+  const height = window.innerHeight || document.documentElement.clientHeight || 768;
+  const shortSide = Math.min(width, height);
+  const portrait = height > width;
+  let density = "normal";
+  if (shortSide <= 760 || height <= 720 || portrait) {
+    density = "dense";
+  }
+  if (shortSide <= 620 || height <= 600) {
+    density = "ultra";
+  }
+  document.body.dataset.density = density;
+}
+
+function fitTitle() {
+  titleEl.classList.remove("tightTitle", "veryTightTitle");
+  if (titleEl.scrollWidth <= titleEl.clientWidth) return;
+  titleEl.classList.add("tightTitle");
+  if (titleEl.scrollWidth <= titleEl.clientWidth) return;
+  titleEl.classList.add("veryTightTitle");
+}
+
+function staticServiceCount() {
+  const available = servicesEl.getBoundingClientRect().height || 240;
+  const narrow = window.innerWidth <= 720;
+  const density = document.body.dataset.density || "normal";
+  const densityOffset = density === "ultra" ? -18 : (density === "dense" ? -10 : 0);
+  const largeOffset = textScale === "large" ? (narrow ? 8 : 12) : 0;
+  const rowHeight = (compactDisplay ? (narrow ? 46 : 54) : (narrow ? 62 : 72)) + densityOffset + largeOffset;
+  const maxRows = compactDisplay ? 10 : (textScale === "large" ? 6 : 8);
+  return Math.max(1, Math.min(maxRows, Math.floor(available / rowHeight)));
+}
+
+function fittedServiceCount(services) {
+  if (!services.length) return 0;
+  const maxCandidates = Math.min(services.length, staticServiceCount());
+  servicesEl.innerHTML = services.slice(0, maxCandidates).map(serviceHtml).join("");
+  const rows = Array.from(servicesEl.querySelectorAll(".service"));
+  const servicesBottom = servicesEl.getBoundingClientRect().bottom;
+  let count = 0;
+  for (const row of rows) {
+    if (row.getBoundingClientRect().bottom <= servicesBottom + 0.5) {
+      count += 1;
+    }
+  }
+  return Math.max(1, count);
+}
+
+function serviceHtml(service, options = {}) {
+  if (service.serviceType === "flight") {
+    return `<article class="service flightService">
+      <div class="time">${escapeText(service.time)}</div>
+      <div class="dest">${escapeText(service.destination || "Unknown")}</div>
+      ${flightNumberHtml(service)}
+      <div class="status ${statusClass(service.status)}">${escapeText(service.status)}</div>
+      <div class="plat">${escapeText(service.gate || "-")}</div>
+    </article>`;
+  }
+  const includeCalling = options.includeCalling !== false;
+  const status = String(service.status || "").trim();
+  const statusKind = statusClass(status);
+  const mobileStatus = status && status.toLowerCase() !== "on time"
+    ? `<span class="mobileStatus ${statusKind}">${escapeText(status)}</span>`
+    : "";
+  const details = [];
+  if (service.operator) details.push(service.operator);
+  if (service.carriages) {
+    const count = String(service.carriages);
+    details.push(`${count} carriage${count === "1" ? "" : "s"}`);
+  }
+  const callingPoints = service.callingPoints || [];
+  const callingParts = [];
+  if (callingPoints.length) {
+    callingParts.push(`Calling at ${callingPoints.join(", ")}`);
+  }
+  if (details.length) {
+    callingParts.push(details.join(" · "));
+  }
+  const calling = callingParts.join(". ");
+  return `<article class="service">
+    <div class="time">${escapeText(service.time)}</div>
+    <div class="dest">${escapeText(service.destination || "Unknown")}${mobileStatus}</div>
+    <div class="status ${statusKind}">${escapeText(service.status)}</div>
+    <div class="plat">${escapeText(service.platform)}</div>
+    ${includeCalling && calling ? `<div class="calling"><span class="callingText">${escapeText(calling)}</span></div>` : ""}
+  </article>`;
+}
+
+function syncCallingScroll() {
+  document.querySelectorAll(".callingText.scroll").forEach(item => {
+    item.classList.remove("scroll");
+    item.style.removeProperty("--calling-scroll-distance");
+    item.style.removeProperty("--calling-scroll-duration");
+  });
+  if (motionPreference === "still") return;
+  const callingItems = Array.from(servicesEl.querySelectorAll(".callingText"));
+  let maxTextWidth = 0;
+  let maxParentWidth = 0;
+  callingItems.forEach(item => {
+    item.classList.remove("scroll");
+    item.style.removeProperty("--calling-scroll-distance");
+    item.style.removeProperty("--calling-scroll-duration");
+    const parentWidth = item.parentElement?.clientWidth || 0;
+    maxParentWidth = Math.max(maxParentWidth, parentWidth);
+    maxTextWidth = Math.max(maxTextWidth, item.scrollWidth);
+  });
+  const maxDistance = maxTextWidth + maxParentWidth;
+  if (maxTextWidth <= maxParentWidth + 4) return;
+  const duration = Math.max(24, Math.min(110, Math.ceil(maxDistance / 28) + 10));
+  callingItems.forEach(item => {
+    const parentWidth = item.parentElement?.clientWidth || 0;
+    if (item.scrollWidth <= parentWidth + 4) return;
+    item.style.setProperty("--calling-scroll-distance", `${maxDistance}px`);
+    item.style.setProperty("--calling-scroll-duration", `${duration}s`);
+    item.classList.add("scroll");
+  });
+}
+
+function renderRotator() {
+  if (motionPreference === "still") {
+    rotatorEl.hidden = true;
+    rotatorServiceEl.innerHTML = "";
+    return;
+  }
+  if (!overflowServices.length) {
+    rotatorEl.hidden = true;
+    rotatorServiceEl.innerHTML = "";
+    return;
+  }
+  if (overflowIndex >= overflowServices.length) {
+    overflowIndex = 0;
+  }
+  rotatorEl.hidden = false;
+  rotatorServiceEl.innerHTML = serviceHtml(overflowServices[overflowIndex], { includeCalling: false });
+  overflowIndex = (overflowIndex + 1) % overflowServices.length;
+}
+
+function tubeIsPortrait() {
+  const width = window.innerWidth || document.documentElement.clientWidth || 1024;
+  const height = window.innerHeight || document.documentElement.clientHeight || 768;
+  return height >= width;
+}
+
+function tubeVisibleLineCount() {
+  const width = window.innerWidth || document.documentElement.clientWidth || 1024;
+  const height = window.innerHeight || document.documentElement.clientHeight || 768;
+  const portrait = tubeIsPortrait();
+  if (portrait) return height >= 700 ? 4 : 3;
+  if (height <= 500) return 2;
+  if (height <= 700) return 3;
+  return 4;
+}
+
+function activeServiceNoticeText() {
+  const notice = document.getElementById("serviceNotice");
+  const text = document.getElementById("serviceNoticeText");
+  return notice && !notice.hidden ? String(text?.textContent || "").trim() : "";
+}
+
+function tubeCustomDueText(service) {
+  const explicit = String(service.due || "").trim();
+  if (explicit) return explicit;
+  const status = String(service.status || "").trim();
+  if (status && status.toLowerCase() !== "on time") return status;
+  const digits = String(service.time || "").replace(/\D/g, "");
+  if (digits.length !== 4) return "";
+  const nowParts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: boardTimezone || "Europe/London",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(new Date());
+  const nowHour = Number(nowParts.find(part => part.type === "hour")?.value || 0);
+  const nowMinute = Number(nowParts.find(part => part.type === "minute")?.value || 0);
+  const serviceMinutes = Number(digits.slice(0, 2)) * 60 + Number(digits.slice(2));
+  let difference = serviceMinutes - (nowHour * 60 + nowMinute);
+  if (difference < -60) difference += 24 * 60;
+  if (difference <= 0) return "Due";
+  return `${difference} min`;
+}
+
+function clearTubePageRotation() {
+  if (tubePageTimer) clearTimeout(tubePageTimer);
+  tubePageTimer = null;
+}
+
+function updateTubeRows(pageServices, lineCount, orderOffset = 0) {
+  while (tubeRowsEl.children.length < lineCount) {
+    const row = document.createElement("div");
+    row.className = "tubeRow tubeDotText";
+    row.innerHTML = '<div class="tubeRowOrder"></div><div class="tubeRowDestination"></div><div class="tubeRowDue"></div>';
+    tubeRowsEl.appendChild(row);
+  }
+  while (tubeRowsEl.children.length > lineCount) {
+    tubeRowsEl.lastElementChild.remove();
+  }
+  [...tubeRowsEl.children].forEach((row, index) => {
+    const service = pageServices[index];
+    row.setAttribute("aria-hidden", service ? "false" : "true");
+    row.querySelector(".tubeRowOrder").textContent = service ? String(orderOffset + index + 1) : "";
+    row.querySelector(".tubeRowDestination").textContent = service ? String(service.destination || "Check front of train") : "";
+    row.querySelector(".tubeRowDue").textContent = service ? tubeCustomDueText(service) : "";
+  });
+}
+
+function renderTubePage(state, advance = false) {
+  const lineCount = tubeVisibleLineCount();
+  const maxPages = tubeIsPortrait() ? 1 : 2;
+  const services = (state.services || []).slice(0, lineCount * maxPages);
+  const pageCount = Math.max(1, Math.min(maxPages, Math.ceil(services.length / lineCount)));
+  if (advance && pageCount > 1) tubePageIndex = (tubePageIndex + 1) % pageCount;
+  if (tubePageIndex >= pageCount) tubePageIndex = 0;
+  const pageServices = services.slice(tubePageIndex * lineCount, (tubePageIndex + 1) * lineCount);
+  tubePageLabelEl.textContent = tubePageIndex === 0 ? "NOW" : "NEXT";
+  tubeRowsEl.style.setProperty("--tube-line-count", String(lineCount));
+  tubeDisplayEl.style.setProperty("--tube-line-count", String(lineCount));
+  updateTubeRows(pageServices, lineCount, tubePageIndex * lineCount);
+  const lines = [...new Set(services.map(service => String(service.line || service.operator || "").trim()).filter(Boolean))];
+  tubeBaseFooterText = lines.join(" · ") || "LONDON UNDERGROUND";
+  tubeDisplayLinesEl.textContent = tubeBaseFooterText;
+  if (!tubeSystemMessageEl.hidden) {
+    requestAnimationFrame(() => positionTubeMessage(tubeMessageUrgent));
+  }
+  clearTubePageRotation();
+  if (pageCount > 1 && motionPreference !== "still") {
+    tubePageTimer = setTimeout(() => renderTubePage(state, true), 12000);
+  }
+}
+
+function renderTubeBoard(state) {
+  tubeDisplayEl.hidden = false;
+  tubeDisplayStationEl.textContent = String(state.title || "London Underground").toUpperCase();
+  const selectedDirections = state.platformFilter || [];
+  tubeDisplayPlatformEl.textContent = selectedDirections.length
+    ? selectedDirections.map(value => String(value).replace(/\s*-\s*platform\s*\d+/i, "")).join(" · ").toUpperCase()
+    : "LIVE ARRIVALS";
+  renderTubePage(state);
+}
+
+function busVisibleLineCount() {
+  const width = window.innerWidth || document.documentElement.clientWidth || 1024;
+  const height = window.innerHeight || document.documentElement.clientHeight || 768;
+  if (height >= width) return height >= 700 ? 5 : 4;
+  return height <= 500 ? 4 : 6;
+}
+
+function busServiceDueText(service) {
+  const explicit = String(service.due || "").trim();
+  if (/^\d+$/.test(explicit)) return `${explicit} min`;
+  if (explicit) return explicit;
+  return tubeCustomDueText(service);
+}
+
+function renderBusBoard(state) {
+  busDisplayEl.hidden = false;
+  const titleParts = String(state.title || "London Buses").split(" · ");
+  busDisplayStopEl.textContent = String(titleParts.shift() || "London Buses").toUpperCase();
+  busDisplayDirectionEl.textContent = String(titleParts.join(" · ") || state.displayLabel || "Live arrivals").toUpperCase();
+  const lineCount = busVisibleLineCount();
+  const services = (state.services || []).slice(0, lineCount);
+  busRowsEl.style.setProperty("--bus-line-count", String(lineCount));
+  busRowsEl.innerHTML = Array.from({ length: lineCount }, (_, index) => {
+    const service = services[index];
+    if (!service) return '<div class="busRow tubeDotText" aria-hidden="true"></div>';
+    return `<div class="busRow tubeDotText">
+      <div class="busRoute">${escapeText(service.route || service.operator || service.platform || "")}</div>
+      <div class="busDestination">${escapeText(service.destination || "Check destination display")}</div>
+      <div class="busDue">${escapeText(busServiceDueText(service))}</div>
+    </div>`;
+  }).join("");
+  const routes = [...new Set(services.map(service => String(service.route || service.operator || "").trim()).filter(Boolean))];
+  busDisplayRoutesEl.textContent = routes.length ? `ROUTES ${routes.join(" · ")}` : "LONDON BUSES";
+}
+
+let lastRenderedState = null;
+let displayLoading = false;
+let displayRetryDelay = 5000;
+let displayReconnecting = false;
+function showDisplayReconnecting() {
+  if (typeof clearSystemFooterRotation === "function") clearSystemFooterRotation();
+  dataBadgeEl.textContent = lastRenderedState ? "Out of date" : "Connecting";
+  dataBadgeEl.className = "dataBadge fallback";
+  messageEl.textContent = "Connection interrupted · Retrying automatically";
+  if (!lastRenderedState) servicesEl.innerHTML = '<div class="empty">Waiting for a connection…</div>';
+}
+window.addEventListener("service-notice-layout", () => {
+  if (lastRenderedState) render(lastRenderedState, false);
+});
+
+function renderTubeDisplayState(state) {
+  overflowServices = [];
+  rotatorEl.hidden = true;
+  const nextBoardKey = String(boardId || state.title || "tube");
+  if (tubeRenderedBoardKey !== nextBoardKey || tubeIsPortrait()) tubePageIndex = 0;
+  tubeRenderedBoardKey = nextBoardKey;
+  renderTubeBoard(state);
+  const firstTubeMessage = (state.messages || [])[0];
+  const boardTubeMessage = typeof firstTubeMessage === "string" ? firstTubeMessage : (firstTubeMessage?.text || "");
+  const customTubeMessage = activeServiceNoticeText() || boardTubeMessage;
+  if (typeof scheduleSystemFooterRotation === "function") {
+    scheduleSystemFooterRotation("tube", tubeDisplayLinesEl.textContent, customTubeMessage, state);
+  }
+}
+
+function renderBusDisplayState(state) {
+  if (typeof clearSystemFooterRotation === "function") clearSystemFooterRotation();
+  overflowServices = [];
+  rotatorEl.hidden = true;
+  renderBusBoard(state);
+}
+
+function renderStandardDisplayState(state, data, isFlightBoard = false) {
+  const services = state.services || [];
+  placeHeadEl.textContent = state.mode === "arrivals" ? "Origin" : "Destination";
+  document.querySelector(".platformHead").textContent = isFlightBoard ? "Gate" : "Plat";
+  rotatorLabelEl.textContent = isFlightBoard
+    ? (state.mode === "arrivals" ? "Further arrivals" : "Further departures")
+    : ((state.platformFilter || []).length ? "More from this platform" : "More services");
+  // Measure against this viewport, without a rotator left over from the last render.
+  if (!isNativeDisplay) {
+    overflowServices = [];
+    renderRotator();
+  }
+  let mainCount = fittedServiceCount(services);
+  if (!isNativeDisplay && mainCount < services.length && motionPreference !== "still") {
+    // Reserve the overflow row before deciding how many full rows fit above it.
+    overflowServices = services.slice(mainCount, mainCount + 4);
+    overflowIndex = 0;
+    renderRotator();
+    mainCount = fittedServiceCount(services);
+  }
+  const visibleServices = services.slice(0, mainCount);
+  servicesEl.innerHTML = visibleServices.map(serviceHtml).join("") || '<div class="empty">No services</div>';
+  overflowServices = services.slice(mainCount, mainCount + 4);
+  overflowIndex = 0;
+  renderRotator();
+  rotateFlightNumbers(false);
+  requestAnimationFrame(syncCallingScroll);
+  const firstMessage = (state.messages || [])[0];
+  const customMessage = typeof firstMessage === "string" ? firstMessage : (firstMessage?.text || "");
+  const baseMessage = customMessage || state.subtitle || "";
+  messageEl.textContent = baseMessage;
+  if (typeof scheduleSystemFooterRotation === "function") {
+    scheduleSystemFooterRotation(isFlightBoard ? "flight" : "rail", baseMessage, customMessage, state);
+  }
+  const updatedText = state.updatedAt ? `Updated ${new Date(state.updatedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}` : "";
+  updatedEl.textContent = [updatedText, data.note].filter(Boolean).join(" · ");
+  if (displayReconnecting) showDisplayReconnecting();
+}
+
+const displayRenderers = {
+  rail: (state, data) => renderStandardDisplayState(state, data, false),
+  flight: (state, data) => renderStandardDisplayState(state, data, true),
+  tube: state => renderTubeDisplayState(state),
+  bus: state => renderBusDisplayState(state)
+};
+
+function render(state, refreshSchedule = true) {
+  lastRenderedState = state.error ? null : state;
+  applyBoardDisplaySettings(state.displaySettings || {});
+  boardTimezone = state.timezone || "";
+  const boardType = state.serviceModule?.boardType || state.boardType || (
+    (state.services || []).some(service => service.serviceType === "tube") ? "tube" :
+    ((state.services || []).some(service => service.serviceType === "bus") ? "bus" :
+    ((state.services || []).some(service => service.serviceType === "flight") ? "flight" : "rail"))
+  );
+  const isTubeBoard = !state.error && boardType === "tube";
+  const isBusBoard = !state.error && boardType === "bus";
+  document.body.classList.toggle("tubeBoard", isTubeBoard);
+  document.body.classList.toggle("busBoard", isBusBoard);
+  if (typeof tubeDisplayEl !== "undefined") tubeDisplayEl.hidden = !isTubeBoard;
+  if (typeof busDisplayEl !== "undefined") busDisplayEl.hidden = !isBusBoard;
+  if (!isTubeBoard && typeof tubePageTimer !== "undefined") clearTubePageRotation();
+  tick();
+  titleEl.textContent = String(state.title || "Destination Board").toUpperCase();
+  displayLabelEl.textContent = String(state.displayLabel || "").toUpperCase();
+  requestAnimationFrame(fitTitle);
+  placeHeadEl.textContent = state.mode === "arrivals" ? "Origin" : "Destination";
+  if (state.error) {
+    if (typeof clearSystemFooterRotation === "function") clearSystemFooterRotation();
+    overflowServices = [];
+    rotatorEl.hidden = true;
+    messageEl.textContent = "";
+    updatedEl.textContent = "";
+    dataBadgeEl.textContent = "Unavailable";
+    if (state.error.startsWith("Personal displays paused.")) {
+      dataBadgeEl.textContent = "Subscription paused";
+      servicesEl.innerHTML = `<div class="empty">${escapeText(state.error)}</div>`;
+      if (refreshSchedule) scheduleRefresh(30000);
+      return;
+    }
+    if (/^Invalid session[.]/i.test(state.error) && appSessionToken) {
+      servicesEl.innerHTML = '<div class="empty">Reconnecting your account…</div>';
+      if (params.get("appShell") === "1") {
+        location.href = "destinationboard://session-invalid";
+      } else {
+        servicesEl.innerHTML = '<div class="empty">Session ended. Open the portal to sign in again.</div>';
+      }
+      return;
+    }
+    if (state.error === "Invalid device token" || state.error.indexOf("expired") !== -1) {
+      showDisplayLinkEnded(
+        state.error === "Invalid device token"
+          ? "This screen link has been deleted."
+          : state.error
+      );
+      return;
+    }
+    servicesEl.innerHTML = `<div class="empty">${escapeText(state.error)}</div>`;
+    return;
+  }
+  const data = state.data || {};
+  dataBadgeEl.textContent = data.label || "Board";
+  dataBadgeEl.className = `dataBadge ${escapeText(data.status || "")}`;
+  const isFlightBoard = boardType === "flight";
+  if (refreshSchedule) {
+    scheduleRefresh(Math.max(10, Number(state.serviceModule?.refreshSeconds || (isTubeBoard ? 30 : (isBusBoard ? 20 : (isFlightBoard ? 60 : 120))))) * 1000);
+  }
+  document.body.classList.toggle("flightBoard", isFlightBoard);
+  document.body.classList.toggle("flightDepartures", isFlightBoard && state.mode !== "arrivals");
+  document.body.classList.toggle("flightArrivals", isFlightBoard && state.mode === "arrivals");
+  document.body.classList.toggle("platformFiltered", (state.platformFilter || []).length > 0);
+  const renderer = displayRenderers[boardType] || displayRenderers.rail;
+  renderer(state, data);
+}
+
+function scheduleRefresh(delayMs = 120000) {
+  if (refreshTimer) clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(load, delayMs);
+}
+
+let demoMode = "rail";
+function load() {
+ const base = {title:"Cardiff Central",boardType:demoMode,mode:"departures",timezone:"Europe/London",displayLabel:"SAMPLE DEPARTURES",data:{label:"Demo",status:"demo"},messages:["Sample services — not live travel information"],displaySettings:{},services:[]};
+ if(demoMode === "rail") base.services = [
+ {time:"14:03",destination:"London Paddington",status:"On time",platform:"2",operator:"Great Western Railway",callingPoints:["Newport","Bristol Parkway","Reading"]},
+ {time:"14:12",destination:"Swansea",status:"On time",platform:"3",operator:"Transport for Wales",callingPoints:["Bridgend","Port Talbot Parkway","Neath"]},
+ {time:"14:18",destination:"Manchester Piccadilly",status:"14:22",platform:"1",operator:"Transport for Wales",callingPoints:["Newport","Hereford","Shrewsbury"]},
+ {time:"14:30",destination:"The Model Railway",status:"On time",platform:"9",operator:"Your custom service",callingPoints:["The Kitchen","Your Happy Place"]}];
+ if(demoMode === "tube") {base.title="King’s Cross St Pancras";base.platformFilter=["Sample Piccadilly line arrivals"];base.services=[{destination:"Cockfosters",due:"2 min",line:"Piccadilly",serviceType:"tube"},{destination:"Heathrow T5",due:"5 min",line:"Piccadilly",serviceType:"tube"},{destination:"Uxbridge",due:"8 min",line:"Piccadilly",serviceType:"tube"}];}
+ if(demoMode === "bus") {base.title="Your London bus stop · Sample arrivals";base.services=[{route:"73",destination:"Stoke Newington",due:"2 min",serviceType:"bus"},{route:"38",destination:"Clapton Pond",due:"5 min",serviceType:"bus"},{route:"19",destination:"Finsbury Park",due:"8 min",serviceType:"bus"},{route:"73",destination:"Stoke Newington",due:"12 min",serviceType:"bus"}];}
+ render(base,false);
+}
+document.querySelectorAll("[data-demo]").forEach(button=>button.addEventListener("click",()=>{demoMode=button.dataset.demo;document.querySelectorAll("[data-demo]").forEach(b=>b.setAttribute("aria-pressed",String(b===button)));load();}));
+function tick() {
+  const options = { hour: "2-digit", minute: "2-digit" };
+  if (boardTimezone) options.timeZone = boardTimezone;
+  try {
+    const now = new Date();
+    const timeText = now.toLocaleTimeString([], options);
+    clockEl.textContent = timeText;
+    tubeDisplayClockEl.textContent = timeText;
+    tubeDisplayDateEl.textContent = now.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      weekday: "short",
+      ...(boardTimezone ? { timeZone: boardTimezone } : {})
+    }).toUpperCase();
+  } catch (_error) {
+    const now = new Date();
+    const timeText = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    clockEl.textContent = timeText;
+    tubeDisplayClockEl.textContent = timeText;
+    tubeDisplayDateEl.textContent = now.toLocaleDateString("en-GB", { day: "2-digit", month: "short", weekday: "short" }).toUpperCase();
+  }
+}
+
+tick();
+applyDisplayOptions();
+load();
+setInterval(tick, 1000);
+setInterval(renderRotator, 4000);
+setInterval(() => rotateFlightNumbers(true), 3000);
+tubeDisplayEl.addEventListener("click", () => {
+  if (lastRenderedState?.boardType === "tube") renderTubePage(lastRenderedState, true);
+});
+function resizeDisplay() {
+  if (isNativeDisplay) {
+    load();
+    return;
+  }
+  requestAnimationFrame(() => {
+    if (lastRenderedState) render(lastRenderedState, false);
+    else applyAutoDensity();
+  });
+}
+window.addEventListener("resize", resizeDisplay);
+window.addEventListener("orientationchange", resizeDisplay);
+window.addEventListener("online", load);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) load();
+});
+
+</script>
+</body>
+</html>
