@@ -1,1 +1,18 @@
-{"schemaVersion":1,"notices":[]}
+{
+  "schemaVersion": 1,
+  "notices": [
+    {
+      "id": "62366aca-9b5c-42d1-8710-c3d1ee322f2c",
+      "revision": 1,
+      "status": "active",
+      "updatedAt": "2026-10-12T13:04:50Z",
+      "startsAt": "2026-10-12T13:04:00Z",
+      "expiresAt": "2026-10-13T13:04:00Z",
+      "title": "Test!",
+      "message": "Test :)",
+      "kind": "news",
+      "audience": "testers",
+      "area": "all"
+    }
+  ]
+}
