@@ -935,3 +935,71 @@ figure {
     transition: none !important;
   }
 }
+
+
+/* maninaskirt about portrait and released Destination Board */
+.about-portrait {
+  position: relative;
+  width: min(100%, 390px);
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: #061329;
+  isolation: isolate;
+}
+
+.about-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.about-portrait h1 {
+  position: absolute;
+  z-index: 1;
+  top: clamp(1.5rem, 4vw, 2.25rem);
+  left: clamp(1.25rem, 4vw, 1.75rem);
+  right: 0.75rem;
+  margin: 0;
+  font-size: clamp(2.35rem, 6vw, 3.15rem);
+  font-weight: 250;
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, .3);
+}
+
+.about-portrait h1 span {
+  color: #e6e8ed;
+}
+
+.about-story-copy {
+  margin-top: clamp(2.4rem, 5vw, 3.5rem);
+}
+
+.featured-app-secondary {
+  margin-top: clamp(4rem, 8vw, 6rem);
+  border-top: 1px solid var(--line);
+  padding-top: clamp(4rem, 8vw, 6rem);
+}
+
+.featured-app-secondary .concept-panel {
+  min-height: 260px;
+  margin-top: 0;
+}
+
+@media (max-width: 620px) {
+  .about-portrait {
+    width: min(100%, 350px);
+  }
+
+  .about-portrait h1 {
+    font-size: clamp(2.15rem, 10vw, 2.8rem);
+  }
+}
+
+/* Welsh-first origin credit */
+.footer-identity { display: flex; align-items: center; gap: 0.8rem; }
+.footer-mark img { display: block; width: 32px; height: 32px; }
+.origin-credit { display: block; margin-top: 0.35rem; color: #aaa; font-size: 0.72rem; line-height: 1.6; letter-spacing: 0.015em; }
+.landing-origin { margin-top: 2rem; text-align: center; }
+@media (max-width: 620px) { .site-footer { padding-top: 1.5rem; padding-bottom: 1.5rem; } }
