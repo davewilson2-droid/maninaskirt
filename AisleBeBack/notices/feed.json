@@ -1,1 +1,18 @@
-{"schemaVersion":1,"notices":[]}
+{
+  "schemaVersion": 1,
+  "notices": [
+    {
+      "id": "107e105a-7911-44c2-be07-e424bfb79ad3",
+      "revision": 1,
+      "status": "active",
+      "updatedAt": "2026-10-21T18:06:16Z",
+      "startsAt": "2026-10-21T18:05:00Z",
+      "expiresAt": "2026-10-21T19:05:00Z",
+      "title": "Test",
+      "message": "Testing",
+      "kind": "news",
+      "audience": "everyone",
+      "area": "app"
+    }
+  ]
+}
